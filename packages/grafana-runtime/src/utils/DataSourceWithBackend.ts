@@ -244,6 +244,7 @@ class DataSourceWithBackend<
     if (request.skipQueryCache) {
       headers[PluginRequestHeaders.SkipQueryCache] = 'true';
     }
+    // console.log('EVENT: request sent');
     return getBackendSrv()
       .fetch<BackendDataSourceResponse>({
         url,
@@ -255,6 +256,7 @@ class DataSourceWithBackend<
       })
       .pipe(
         switchMap((raw) => {
+          console.log('EVENT: data received');
           const rsp = toDataQueryResponse(raw, queries);
           // Check if any response should subscribe to a live stream
           if (rsp.data?.length && rsp.data.find((f: DataFrame) => f.meta?.channel)) {

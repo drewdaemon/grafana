@@ -708,6 +708,7 @@ export class ElasticDatasource
    */
   query(request: DataQueryRequest<ElasticsearchQuery>): Observable<DataQueryResponse> {
     const start = new Date();
+    console.log('EVENT: data requested');
     return super.query(request).pipe(
       tap((response) => trackQuery(response, request, start)),
       map((response) => {
