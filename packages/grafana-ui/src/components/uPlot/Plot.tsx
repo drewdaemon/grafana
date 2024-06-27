@@ -56,10 +56,20 @@ export class UPlotChart extends Component<PlotProps, UPlotChartState> {
       }
     });
 
+    const configFromProps = this.props.config.getConfig();
     const config: Options = {
       width: Math.floor(this.props.width),
       height: Math.floor(this.props.height),
-      ...this.props.config.getConfig(),
+      ...configFromProps,
+      hooks: {
+        ...configFromProps.hooks,
+        draw: [
+          () => {
+            const now = performance.now();
+            console.log(`EVENT: chart drawn (took: ${now - window.DATA_RECEIVED_TIME}ms)`);
+          },
+        ],
+      },
     };
 
     pluginLog('UPlot', false, 'Reinitializing plot', config);
