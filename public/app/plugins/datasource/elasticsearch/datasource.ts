@@ -710,7 +710,13 @@ export class ElasticDatasource
     const start = new Date();
     const now = performance.now();
     window.DATA_REQUESTED_TIME = now;
-    console.log(`EVENT: requesting data (took ${now}ms)`);
+    console.log(
+      `EVENT: requesting data (took ${
+        // if we're coming from the listing page, we use that as the start time
+        // otherwise, we use the browser's navigation start time
+        window.NAVIGATION_START_TIME ? now - window.NAVIGATION_START_TIME : now
+      }ms)`
+    );
     return super.query(request).pipe(
       tap((response) => trackQuery(response, request, start)),
       map((response) => {

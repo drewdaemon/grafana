@@ -92,6 +92,9 @@ export function NameCell({ row: { original: data }, onFolderClick, treeID }: Nam
           {item.url ? (
             <Link
               onClick={() => {
+                const now = performance.now();
+                window.NAVIGATION_START_TIME = now;
+                console.log('EVENT: navigated to dashboard');
                 reportInteraction('manage_dashboards_result_clicked');
               }}
               href={item.url}
