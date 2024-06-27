@@ -256,7 +256,9 @@ class DataSourceWithBackend<
       })
       .pipe(
         switchMap((raw) => {
-          console.log('EVENT: data received');
+          const now = performance.now();
+          window.DATA_RECEIVED_TIME = now;
+          console.log(`EVENT: data received (took ${now - window.DATA_REQUESTED_TIME}ms)`);
           const rsp = toDataQueryResponse(raw, queries);
           // Check if any response should subscribe to a live stream
           if (rsp.data?.length && rsp.data.find((f: DataFrame) => f.meta?.channel)) {

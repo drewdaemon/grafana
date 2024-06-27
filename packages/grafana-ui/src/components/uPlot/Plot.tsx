@@ -63,7 +63,12 @@ export class UPlotChart extends Component<PlotProps, UPlotChartState> {
       ...configFromProps,
       hooks: {
         ...configFromProps.hooks,
-        draw: [() => console.log('EVENT: chart drawn')],
+        draw: [
+          () => {
+            const now = performance.now();
+            console.log(`EVENT: chart drawn (took: ${now - window.DATA_RECEIVED_TIME}ms)`);
+          },
+        ],
       },
     };
 
